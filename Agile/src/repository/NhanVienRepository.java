@@ -2,38 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package respository;
+package repository;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import model.NhanVien;
-import model.SanPham;
 
 /**
  *
  * @author LE MINH
  */
-public class PosAgileRespository {
-
-    public boolean checkLogin(String account, String password) {
-        String query = """
-                       SELECT * FROM dbo.USERS
-                       WHERE username = ? AND password = ?
-                       """;
-        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
-            stm.setString(1, account);
-            stm.setString(2, password);
-            ResultSet rs = stm.executeQuery();
-            return rs.next();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return false;
-    }
+public class NhanVienRepository {
 
     public NhanVien getNhanVien(String maNhanVien) {
         String query = """
@@ -187,45 +170,4 @@ public class PosAgileRespository {
             e.printStackTrace(System.out);
         }
     }
-
-    public String getRole(String maNhanVien) {
-        String query = """
-                       SELECT role FROM dbo.USERS
-                       WHERE username = ?
-                       """;
-        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
-            stm.setString(1, maNhanVien);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                System.out.println(rs.getString(1));
-                return rs.getString(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
-    }
-    
-    public List<SanPham> getAllSanPham() {
-        String query = """
-                       SELECT * FROM dbo.SANPHAM
-                       """;
-        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
-            ResultSet rs = stm.executeQuery();
-            List<SanPham> list = new ArrayList<>();
-            while (rs.next()) {
-                list.add(new SanPham(rs.getString(1), rs.getString(2), rs.getString(3),
-                        rs.getInt(8), rs.getInt(5), rs.getString(6), rs.getString(7)));
-            }
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-        return null;
-    }
-    
-    
-    
-   
-
 }
