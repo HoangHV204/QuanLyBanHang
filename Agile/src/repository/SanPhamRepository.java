@@ -41,16 +41,19 @@ public class SanPhamRepository {
         if (sp == null) {
             return false;
         }
-        String query = "{CALL dbo.SP_AddSanPham(?,?,?,?,?,?,?)}";
+        String query = """
+                       INSERT INTO dbo.CHITIETSANPHAM
+                       VALUES(?,?,?,?,?,?,?)
+                       """;
         int check = 0;
         try (Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
             stm.setString(1, sp.getMaSanPham());
-            stm.setString(2, sp.getMaSanPham());
-            stm.setString(3, sp.getTenSanPham());
-            stm.setString(4, sp.getLoai());
+            stm.setString(2, sp.getTenSanPham());
+            stm.setString(3, sp.getLoai());
+            stm.setInt(4, sp.getGiaBan());
             stm.setInt(5, sp.getSoLuong());
-            stm.setInt(6, sp.getGiaBan());
-            stm.setString(7, sp.getTrangThai());
+            stm.setString(6, sp.getTrangThai());
+            stm.setString(7, sp.getImage());
             check = stm.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -62,15 +65,19 @@ public class SanPhamRepository {
         if (sp == null) {
             return false;
         }
-        String query = "{CALL dbo.SP_UpdateSanPham(?,?,?,?,?,?)}";
+        String query = """
+                       UPDATE dbo.CHITIETSANPHAM
+                       SET TenSP = ?, Loai = ?, DonGia = ?, SoLuong = ?, TrangThai = ?
+                       WHERE MaChiTietSanPham = ?
+                       """;
         int check = 0;
-        try (Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
-            stm.setString(1, sp.getMaSanPham());
-            stm.setString(2, sp.getTenSanPham());
-            stm.setString(3, sp.getLoai());
-            stm.setInt(4, sp.getGiaBan());
+        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
+            stm.setString(1, sp.getTenSanPham());
+            stm.setString(2, sp.getLoai());
+            stm.setInt(3, sp.getGiaBan());
+            stm.setInt(4, sp.getSoLuong());
             stm.setString(5, sp.getTrangThai());
-            stm.setInt(6, sp.getSoLuong());
+            stm.setString(6, sp.getMaSanPham());
             check = stm.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -94,7 +101,10 @@ public class SanPhamRepository {
     }
     
     public int getMaSanPham() {
-        String query = "SELECT COUNT(*) FROM dbo.CHITIETSANPHAM";
+        String query = """
+                       SELECT MAX(CAST(SUBSTRING(MaChiTietSanPham,3,LEN(MaChiTietSanPham)) AS INT))
+                       FROM dbo.CHITIETSANPHAM
+                       """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {

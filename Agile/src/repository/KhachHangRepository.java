@@ -85,7 +85,10 @@ public class KhachHangRepository {
     }
     
     public int getIdKhachHang() {
-        String query = "SELECT COUNT(*) FROM dbo.KHACHHANG";
+        String query = """
+                       SELECT MAX(CAST(SUBSTRING(MaKH,3,LEN(MaKH)) AS INT))
+                       FROM dbo.KHACHHANG
+                       """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {

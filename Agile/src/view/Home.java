@@ -368,11 +368,11 @@ public class Home extends javax.swing.JFrame {
         if (rdHetSanPham.isSelected()) {
             trangThai = "Hết";
         }
-        return new SanPham(maSP, tenSP, loai, soLuong, giaBan, trangThai, null);
+        return new SanPham(maSP, tenSP, loai, soLuong, giaBan, trangThai, "hoicham.jpg");
     }
 
     private void clearFormSanPham() {
-        txtMaSP.setText("");
+        txtMaSanPham.setText("");
         txtTenSanPham.setText("");
         txtGiaSanPham.setText("");
         txtSoLuongSanPham.setText("");
@@ -1183,12 +1183,12 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(SanPhamLayout.createSequentialGroup()
                         .addComponent(jLabel24)
                         .addGap(42, 42, 42)
-                        .addComponent(txtGiaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtGiaSanPham))
                     .addGroup(SanPhamLayout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addGap(29, 29, 29)
                         .addComponent(rdConSanPham)
-                        .addGap(29, 29, 29)
+                        .addGap(30, 30, 30)
                         .addComponent(rdHetSanPham))
                     .addGroup(SanPhamLayout.createSequentialGroup()
                         .addComponent(btnThemSanPham)
@@ -1254,16 +1254,16 @@ public class Home extends javax.swing.JFrame {
                                 .addGroup(SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel23)
                                     .addComponent(txtSoLuongSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGap(18, 18, 18)
+                                .addGroup(SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel24)
                                     .addComponent(txtGiaSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(9, 9, 9)
                                 .addGroup(SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel25)
                                     .addComponent(rdConSanPham)
                                     .addComponent(rdHetSanPham))
-                                .addGap(27, 27, 27)
+                                .addGap(18, 18, 18)
                                 .addGroup(SanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnThemSanPham)
                                     .addComponent(btnLuuSanPham)
@@ -1969,27 +1969,23 @@ public class Home extends javax.swing.JFrame {
                             .addComponent(jLabel42)
                             .addComponent(jLabel56)
                             .addComponent(jLabel57))
-                        .addGroup(KhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(22, 22, 22)
+                        .addGroup(KhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(KhachHangLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(KhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(KhachHangLayout.createSequentialGroup()
-                                        .addComponent(rdNam_KH)
-                                        .addGap(75, 75, 75)
-                                        .addComponent(rdNu_KH))
-                                    .addComponent(txtTen_KH, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
-                                    .addComponent(txtDiaChi_KH)))
-                            .addGroup(KhachHangLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(txtSdt_KH, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(rdNam_KH)
+                                .addGap(75, 75, 75)
+                                .addComponent(rdNu_KH))
+                            .addComponent(txtTen_KH)
+                            .addComponent(txtDiaChi_KH)
+                            .addComponent(txtSdt_KH, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(KhachHangLayout.createSequentialGroup()
                         .addGap(120, 120, 120)
                         .addComponent(btnThemKhachHang)
                         .addGap(18, 18, 18)
                         .addComponent(btnLuuKhachHang)
-                        .addGap(29, 29, 29)
+                        .addGap(18, 18, 18)
                         .addComponent(btnSua_KH)
-                        .addGap(41, 41, 41)
+                        .addGap(18, 18, 18)
                         .addComponent(btnXoa_KH)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                 .addComponent(panelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2088,7 +2084,7 @@ public class Home extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(36, Short.MAX_VALUE))
-            .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, 680));
@@ -2374,6 +2370,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (service.deleteKhachHang(getDataKhachHang(index_KH))) {
             showAllKhachHangToTable(service.getAllKhachHang());
+            clearFormKhachHang();
             JOptionPane.showMessageDialog(this, "Xoá thành công");
         } else {
             JOptionPane.showMessageDialog(this, "Xoá thất bại");

@@ -776,13 +776,13 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                  <Component id="txtGiaSanPham" min="-2" pref="399" max="-2" attributes="0"/>
+                                  <Component id="txtGiaSanPham" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="rdConSanPham" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                                   <Component id="rdHetSanPham" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -864,18 +864,18 @@
                                               <Component id="jLabel23" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="txtSoLuongSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txtGiaSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txtGiaSanPham" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="rdConSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="rdHetSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="btnThemSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="btnLuuSanPham" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -2178,23 +2178,16 @@
                                       <Component id="jLabel56" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel57" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" attributes="0">
-                                                  <Component id="rdNam_KH" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                                                  <Component id="rdNu_KH" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Component id="txtTen_KH" alignment="0" pref="420" max="32767" attributes="0"/>
-                                              <Component id="txtDiaChi_KH" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="rdNam_KH" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                                          <Component id="rdNu_KH" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="txtSdt_KH" min="-2" pref="420" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="txtTen_KH" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtDiaChi_KH" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtSdt_KH" min="-2" pref="420" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -2202,9 +2195,9 @@
                                   <Component id="btnThemKhachHang" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnLuuKhachHang" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnSua_KH" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="btnXoa_KH" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
