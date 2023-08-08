@@ -48,4 +48,72 @@ public class PosAgileRepository {
         return null;
     }
 
+    public boolean rememberPassword(String account) {
+        String query = """
+                       UPDATE dbo.USERS
+                       SET RememberPassword = 'ON'
+                       WHERE username = ?
+                       """;
+        int check = 0;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
+            stm.setString(1, account);
+            check = stm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return false;
+    }
+
+    public boolean notRememberPassword(String account) {
+        String query = """
+                       UPDATE dbo.USERS
+                       SET RememberPassword = 'OFF'
+                       WHERE username = ?
+                       """;
+        int check = 0;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
+            stm.setString(1, account);
+            check = stm.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return false;
+    }
+
+    public String getPassword(String account) {
+        String query = """
+                       SELECT password 
+                       FROM dbo.USERS
+                       WHERE username = ?
+                       """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
+            stm.setString(1, account);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public String checkRememberPassword(String account) {
+        String query = """
+                       SELECT  RememberPassword
+                       FROM dbo.USERS
+                       WHERE username = ?
+                       """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
+            stm.setString(1, account);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
 }

@@ -53,7 +53,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cbRememberPassword" min="-2" max="-2" attributes="0"/>
+                              <Component id="chkRememberPassword" min="-2" max="-2" attributes="0"/>
                               <Component id="txtTaiKhoan" pref="285" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="btnDangNhap" min="-2" pref="104" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cbRememberPassword" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkRememberPassword" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -134,10 +134,13 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtTaiKhoan">
         </Component>
-        <Component class="javax.swing.JCheckBox" name="cbRememberPassword">
+        <Component class="javax.swing.JCheckBox" name="chkRememberPassword">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ghi nh&#x1edb; m&#x1ead;t kh&#x1ea9;u"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chkRememberPasswordMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnDangNhap">
           <Properties>
@@ -169,6 +172,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtMatKhau">
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtMatKhauMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -63,8 +63,18 @@ public interface PosInterface {
     boolean updateHoaDon(HoaDon hd, String maNV);
 
     boolean deleteHoaDon(int maHD);
+    
+    boolean deleteKhachHang(KhachHang kh);
 
     List<HoaDon> getAllHoaDonHomQua();
 
     List<HoaDon> getAllHoaDonHomNay();
+    
+    boolean rememberPassword(String account);
+    
+    boolean notRememberPassword(String account);
+    
+    String getPassword(String account);
+    
+    String checkRememberPassword(String account);
 }

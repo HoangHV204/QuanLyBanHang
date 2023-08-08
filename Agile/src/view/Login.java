@@ -12,7 +12,7 @@ import service.PosService;
  * @author LE MINH
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private PosService service = new PosService();
 
     /**
@@ -22,14 +22,21 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-    
+
     private void checkLogin() {
         String account = txtTaiKhoan.getText().toUpperCase();
         String password = String.valueOf(txtMatKhau.getPassword());
         if (service.checkLogin(account, password)) {
-            Home home = new Home(txtTaiKhoan.getText());
+            Home home = new Home(account);
             home.setVisible(true);
             this.setVisible(false);
+            //Remember password
+            if (chkRememberPassword.isSelected()) {
+                service.rememberPassword(account);
+            } else {
+                service.notRememberPassword(account);
+            }
+            
         } else {
             JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác!");
         }
@@ -49,7 +56,7 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtTaiKhoan = new javax.swing.JTextField();
-        cbRememberPassword = new javax.swing.JCheckBox();
+        chkRememberPassword = new javax.swing.JCheckBox();
         btnDangNhap = new javax.swing.JButton();
         btnThoat = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -67,7 +74,12 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Mật khẩu:");
 
-        cbRememberPassword.setText("Ghi nhớ mật khẩu");
+        chkRememberPassword.setText("Ghi nhớ mật khẩu");
+        chkRememberPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkRememberPasswordMouseClicked(evt);
+            }
+        });
 
         btnDangNhap.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDangNhap.setText("Đăng nhập");
@@ -87,6 +99,12 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/key2.png"))); // NOI18N
 
+        txtMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtMatKhauMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -100,7 +118,7 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbRememberPassword)
+                            .addComponent(chkRememberPassword)
                             .addComponent(txtTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,7 +147,7 @@ public class Login extends javax.swing.JFrame {
                                 .addGap(15, 15, 15)
                                 .addComponent(txtMatKhau)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbRememberPassword)
+                        .addComponent(chkRememberPassword)
                         .addGap(41, 41, 41))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -163,6 +181,22 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void chkRememberPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkRememberPasswordMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_chkRememberPasswordMouseClicked
+
+    private void txtMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMatKhauMouseClicked
+        // TODO add your handling code here:
+        String account = txtTaiKhoan.getText().trim().toUpperCase();
+        if (service.checkRememberPassword(account).equalsIgnoreCase("ON")) {
+            chkRememberPassword.setSelected(true);
+            txtMatKhau.setText(service.getPassword(account));
+        } else {
+            chkRememberPassword.setSelected(false);
+        }
+    }//GEN-LAST:event_txtMatKhauMouseClicked
 
     /**
      * @param args the command line arguments
@@ -202,7 +236,7 @@ public class Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnThoat;
-    private javax.swing.JCheckBox cbRememberPassword;
+    private javax.swing.JCheckBox chkRememberPassword;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

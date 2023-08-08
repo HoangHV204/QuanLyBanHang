@@ -23,8 +23,9 @@ public class HoaDonRepository {
     public List<HoaDon> getAllHoaDon() {
         String query = """
                        SELECT MaHD,HOADON.MaSP,Loai,HOADON.SoLuong,HOADON.MaKH,HoTenKH,DiaChi,SĐT,ThanhTien
-                       FROM dbo.HOADON JOIN dbo.KHACHHANG ON KHACHHANG.MaKH = HOADON.MaKH
-                       				JOIN dbo.SANPHAM ON SANPHAM.MaSP = HOADON.MaSP
+                                              FROM dbo.HOADON JOIN dbo.KHACHHANG ON KHACHHANG.MaKH = HOADON.MaKH
+                                              				JOIN dbo.SANPHAM ON SANPHAM.MaSP = HOADON.MaSP
+                       									JOIN dbo.CHITIETSANPHAM ON CHITIETSANPHAM.MaSP = SANPHAM.MaSP
                        """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             ResultSet rs = stm.executeQuery();
@@ -82,7 +83,6 @@ public class HoaDonRepository {
     }
 
     public boolean deleteHoaDon(int maHD) {
-
         String query = """
                        DELETE FROM dbo.HOADON
                        WHERE MaHD = ?
@@ -112,10 +112,11 @@ public class HoaDonRepository {
 
     public List<HoaDon> getAllHoaDonHomQua() {
         String query = """
-                       SELECT MaHD,TenSP,Loai,HOADON.SoLuong,DonGia,HoTenKH,DiaChi,SĐT,ThanhTien
-                       FROM dbo.HOADON JOIN dbo.KHACHHANG ON KHACHHANG.MaKH = HOADON.MaKH
-                                       JOIN dbo.SANPHAM ON SANPHAM.MaSP = HOADON.MaSP
-                       WHERE NgayTao = CAST(DATEADD(day, -1, GETDATE()) AS DATE)
+                       SELECT MaHD,CHITIETSANPHAM.TenSP,Loai,HOADON.SoLuong,CHITIETSANPHAM.DonGia,HoTenKH,DiaChi,SĐT,ThanhTien
+                                              FROM dbo.HOADON JOIN dbo.KHACHHANG ON KHACHHANG.MaKH = HOADON.MaKH
+                                                              JOIN dbo.SANPHAM ON SANPHAM.MaSP = HOADON.MaSP
+                       									   JOIN dbo.CHITIETSANPHAM ON CHITIETSANPHAM.MaSP = SANPHAM.MaSP
+                                              WHERE NgayTao = CAST(DATEADD(day, -1, GETDATE()) AS DATE)
                        """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             ResultSet rs = stm.executeQuery();
@@ -133,10 +134,11 @@ public class HoaDonRepository {
 
     public List<HoaDon> getAllHoaDonHomNay() {
         String query = """
-                       SELECT MaHD,TenSP,Loai,HOADON.SoLuong,DonGia,HoTenKH,DiaChi,SĐT,ThanhTien
-                       FROM dbo.HOADON JOIN dbo.KHACHHANG ON KHACHHANG.MaKH = HOADON.MaKH
-                                       JOIN dbo.SANPHAM ON SANPHAM.MaSP = HOADON.MaSP
-                       WHERE NgayTao = CAST(GETDATE() AS DATE)
+                        SELECT MaHD,CHITIETSANPHAM.TenSP,Loai,HOADON.SoLuong,CHITIETSANPHAM.DonGia,HoTenKH,DiaChi,SĐT,ThanhTien
+                        FROM dbo.HOADON JOIN dbo.KHACHHANG ON KHACHHANG.MaKH = HOADON.MaKH
+                                            JOIN dbo.SANPHAM ON SANPHAM.MaSP = HOADON.MaSP
+                                            JOIN dbo.CHITIETSANPHAM ON CHITIETSANPHAM.MaSP = SANPHAM.MaSP
+                        WHERE NgayTao = CAST(GETDATE() AS DATE)
                        """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             ResultSet rs = stm.executeQuery();

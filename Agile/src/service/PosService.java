@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import model.HoaDon;
 import model.KhachHang;
@@ -63,10 +62,10 @@ public class PosService implements PosInterface {
     }
 
     @Override
-    public List<NhanVien> findNhanVien(String tenNV) {
+    public List<NhanVien> findNhanVien(String maNV) {
         List<NhanVien> listFindNhanVien = new ArrayList<>();
         for (NhanVien nv : this.getAllNhanVien()) {
-            if (nv.getTenNV().contains(tenNV)) {
+            if (maNV.equalsIgnoreCase(nv.getMaNV())) {
                 listFindNhanVien.add(nv);
             }
         }
@@ -196,5 +195,30 @@ public class PosService implements PosInterface {
     @Override
     public List<HoaDon> getAllHoaDonHomNay() {
         return hd.getAllHoaDonHomNay();
+    }
+
+    @Override
+    public boolean deleteKhachHang(KhachHang kh) {
+        return this.kh.deleteKhachHang(kh);
+    }
+
+    @Override
+    public boolean rememberPassword(String account) {
+        return respository.rememberPassword(account);
+    }
+
+    @Override
+    public boolean notRememberPassword(String account) {
+        return respository.notRememberPassword(account);
+    }
+
+    @Override
+    public String getPassword(String account) {
+        return respository.getPassword(account);
+    }
+
+    @Override
+    public String checkRememberPassword(String account) {
+        return respository.checkRememberPassword(account);
     }
 }
