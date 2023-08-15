@@ -35,7 +35,7 @@ public class Home extends javax.swing.JFrame {
     private DefaultTableModel tableModelHoaDonHomQua = new DefaultTableModel();
     private DefaultTableModel tableModelHoaDonHomNay = new DefaultTableModel();
     private String maNV;
-    private int index_KH, tongTienHomQua, tongTienHomNay;
+    private int index_KH, tongTienHomQua, tongTienHomNay, index_SP = -1, checkListKhachHang = 0;
 
     /**
      * Creates new form Home
@@ -158,7 +158,7 @@ public class Home extends javax.swing.JFrame {
     }
 
     private NhanVien getDataFormNhanVien() {
-        String maNV = txtMa_NhanVien.getText().trim();
+        String maNV = txtMa_NhanVien.getText().trim().toUpperCase();
         if (maNV.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập mã nhân viên");
             return null;
@@ -347,7 +347,15 @@ public class Home extends javax.swing.JFrame {
     }
 
     private SanPham getDataSanPham() {
-        String maSP = txtMaSanPham.getText().trim();
+        String maSP = txtMaSanPham.getText().trim().toUpperCase();
+        if (index_SP < 0) {
+            for (SanPham sp : service.getAllSanPham()) {
+                if (maSP.equalsIgnoreCase(sp.getMaSanPham())) {
+                    JOptionPane.showMessageDialog(this, "Đã tồn tại mã sản phẩm");
+                    return null;
+                }
+            }
+        }
         String tenSP = txtTenSanPham.getText().trim();
         if (tenSP.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Chưa nhập tên Sản Phẩm");
@@ -409,8 +417,8 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
-    private void showDetailKhachHang(int index) {
-        KhachHang kh = service.getAllKhachHang().get(index);
+    private void showDetailKhachHang(int index, List<KhachHang> list) {
+        KhachHang kh = list.get(index);
         txtTen_KH.setText(kh.getHoTen());
         txtDiaChi_KH.setText(kh.getDiaChi());
         txtSdt_KH.setText(kh.getSdt());
@@ -419,7 +427,6 @@ public class Home extends javax.swing.JFrame {
         } else {
             rdNu_KH.setSelected(true);
         }
-        System.out.println(kh.getImage());
         String image = "/icon/" + kh.getImage();
         ImageIcon icon = new ImageIcon(getClass().getResource(image));
         avatarKhachHang.setIcon(icon);
@@ -457,7 +464,7 @@ public class Home extends javax.swing.JFrame {
         }
         lbTongTienHomNay.setText(decimalFormat.format(tongTienHomNay) + " VNĐ");
     }
-    
+
     private KhachHang getDataKhachHang() {
         String maKH = "KH" + String.valueOf(service.getIdKhachHang() + 1);
         String tenKH = txtTen_KH.getText().trim();
@@ -486,11 +493,12 @@ public class Home extends javax.swing.JFrame {
         }
         return new KhachHang(maKH, tenKH, diaChi, gioiTinh, sdt, image);
     }
-    
+
     private void clearFormKhachHang() {
         txtTen_KH.setText("");
         txtSdt_KH.setText("");
         txtDiaChi_KH.setText("");
+        showAllKhachHangToTable(service.getAllKhachHang());
     }
 
     /**
@@ -2181,9 +2189,14 @@ public class Home extends javax.swing.JFrame {
 
     private void btnSearch_NhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearch_NhanVienActionPerformed
         // TODO add your handling code here:
-        String findName = txtTim_NhanVien.getText().trim();
-        if (!findName.isEmpty()) {
-            showDataNhanVien(service.findNhanVien(findName));
+        String findNhanVien = txtTim_NhanVien.getText().trim();
+        if (findNhanVien.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy");
+        } else if (service.findNhanVien(findNhanVien) == -1) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy");
+        } else {
+            System.out.println(findNhanVien);
+            showDetailNhanVien(service.findNhanVien(findNhanVien));
         }
     }//GEN-LAST:event_btnSearch_NhanVienActionPerformed
 
@@ -2275,6 +2288,7 @@ public class Home extends javax.swing.JFrame {
         if (service.deleteHoaDon(Integer.parseInt(txtMaHoaDon.getText()))) {
             showHoaDonToTable();
             showHoaDonHomNay();
+            clearFormHoaDon();
             JOptionPane.showMessageDialog(this, "Xoá thành công");
         } else {
             JOptionPane.showMessageDialog(this, "Xoá thất bại");
@@ -2292,21 +2306,23 @@ public class Home extends javax.swing.JFrame {
 
     private void txtMaSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtMaSanPhamMouseClicked
         // TODO add your handling code here:
-        txtMaSanPham.setText("SP" + String.valueOf(service.getMaSanPham() + 1));
     }//GEN-LAST:event_txtMaSanPhamMouseClicked
 
     private void btnThemSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSanPhamActionPerformed
         // TODO add your handling code here:
         clearFormSanPham();
+        this.index_SP = -1;
     }//GEN-LAST:event_btnThemSanPhamActionPerformed
 
     private void btnSuaSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaSanPhamActionPerformed
         // TODO add your handling code here:
-        if (service.updateSanPham(getDataSanPham())) {
-            showAllSanPhamToTable(service.getAllSanPham());
-            JOptionPane.showMessageDialog(this, "Sửa thành công");
-        } else {
-            JOptionPane.showMessageDialog(this, "Sửa thất bại");
+        if (index_SP >= 0) {
+            if (service.updateSanPham(getDataSanPham())) {
+                showAllSanPhamToTable(service.getAllSanPham());
+                JOptionPane.showMessageDialog(this, "Sửa thành công");
+            } else {
+                JOptionPane.showMessageDialog(this, "Sửa thất bại");
+            }
         }
     }//GEN-LAST:event_btnSuaSanPhamActionPerformed
 
@@ -2323,17 +2339,24 @@ public class Home extends javax.swing.JFrame {
 
     private void btnSearchSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchSanPhamActionPerformed
         // TODO add your handling code here:
-        if (service.findSanPham(txtTimSanPham.getText().trim()).isEmpty()) {
+        if (txtTimSanPham.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không tìm thấy");
+        } else if (service.findSanPham(txtTimSanPham.getText()) == -1) {
             JOptionPane.showMessageDialog(this, "Không tìm thấy");
         } else {
-            showAllSanPhamToTable(service.findSanPham(txtTimSanPham.getText().trim()));
+            showDetailSanPham(service.findSanPham(txtTimSanPham.getText()));
         }
     }//GEN-LAST:event_btnSearchSanPhamActionPerformed
 
     private void tbHienThiKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHienThiKhachHangMouseClicked
         // TODO add your handling code here:
         this.index_KH = tbHienThiKhachHang.getSelectedRow();
-        showDetailKhachHang(index_KH);
+        if (checkListKhachHang == 0) {
+            showDetailKhachHang(index_KH, service.getAllKhachHang());
+        }
+        if (checkListKhachHang == -1) {
+            showDetailKhachHang(index_KH, service.findKhachHang(txtTim_KH.getText()));
+        }
     }//GEN-LAST:event_tbHienThiKhachHangMouseClicked
 
     private void btnSua_KHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSua_KHActionPerformed
@@ -2352,17 +2375,20 @@ public class Home extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Không tìm thấy");
         } else {
             showAllKhachHangToTable(service.findKhachHang(txtTim_KH.getText().trim()));
+            this.checkListKhachHang = -1;
         }
     }//GEN-LAST:event_btnSearch_KHActionPerformed
 
     private void btnLuuSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuSanPhamActionPerformed
         // TODO add your handling code here:
-        if (service.addSanPham(getDataSanPham())) {
-            showAllSanPhamToTable(service.getAllSanPham());
-            clearFormSanPham();
-            JOptionPane.showMessageDialog(this, "Thêm thành công");
-        } else {
-            JOptionPane.showMessageDialog(this, "Thêm thất bại");
+        if (index_SP < 0) {
+            if (service.addSanPham(getDataSanPham())) {
+                showAllSanPhamToTable(service.getAllSanPham());
+                clearFormSanPham();
+                JOptionPane.showMessageDialog(this, "Thêm thành công");
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm thất bại");
+            }
         }
     }//GEN-LAST:event_btnLuuSanPhamActionPerformed
 
@@ -2380,6 +2406,8 @@ public class Home extends javax.swing.JFrame {
     private void btnThemKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhachHangActionPerformed
         // TODO add your handling code here:
         clearFormKhachHang();
+        this.checkListKhachHang = 0;
+        showAllKhachHangToTable(service.getAllKhachHang());
     }//GEN-LAST:event_btnThemKhachHangActionPerformed
 
     private void btnLuuKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuKhachHangActionPerformed

@@ -28,7 +28,7 @@ public interface PosInterface {
 
     boolean deleteNhanVien(String maNV);
 
-    List<NhanVien> findNhanVien(String tenNV);
+    int findNhanVien(String tenNV);
 
     String getRole(String maNV);
 
@@ -42,7 +42,7 @@ public interface PosInterface {
 
     int getMaSanPham();
 
-    List<SanPham> findSanPham(String maSP);
+    int findSanPham(String maSP);
 
     List<HoaDon> getAllHoaDon();
 

@@ -62,14 +62,21 @@ public class PosService implements PosInterface {
     }
 
     @Override
-    public List<NhanVien> findNhanVien(String maNV) {
-        List<NhanVien> listFindNhanVien = new ArrayList<>();
-        for (NhanVien nv : this.getAllNhanVien()) {
-            if (maNV.equalsIgnoreCase(nv.getMaNV())) {
-                listFindNhanVien.add(nv);
+    public int findNhanVien(String maNV) {
+        int findIndex = 0, check = 0;
+        for (NhanVien item : this.getAllNhanVien()) {
+            if (item.getMaNV().equalsIgnoreCase(maNV)) {
+                check++; // Kiểm tra xem trong collection có tên cần tìm hay không
+                break;
+            } else {
+                findIndex++;
             }
         }
-        return listFindNhanVien;
+        if (check == 0) {
+            return -1;
+        } else {
+            return findIndex;
+        }
     }
 
     @Override
@@ -138,14 +145,21 @@ public class PosService implements PosInterface {
     }
 
     @Override
-    public List<SanPham> findSanPham(String maSP) {
-        List<SanPham> listFindSanPham = new ArrayList<>();
-        for (SanPham sp : this.getAllSanPham()) {
-            if (maSP.equalsIgnoreCase(sp.getMaSanPham())) {
-                listFindSanPham.add(sp);
+    public int  findSanPham(String maSP) {
+        int findIndex = 0, check = 0;
+        for (SanPham item : this.getAllSanPham()) {
+            if (item.getMaSanPham().equalsIgnoreCase(maSP)) {
+                check++; // Kiểm tra xem trong collection có tên cần tìm hay không
+                break;
+            } else {
+                findIndex++;
             }
         }
-        return listFindSanPham;
+        if (check == 0) {
+            return -1;
+        } else {
+            return findIndex;
+        }
     }
 
     @Override

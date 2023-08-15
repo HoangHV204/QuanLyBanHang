@@ -20,8 +20,9 @@ public class SanPhamRepository {
     
     public List<SanPham> getAllSanPham() {
         String query = """
-                       SELECT MaChiTietSanPham,TenSP,Loai,SoLuong,DonGia,TrangThai,image 
+                       SELECT MaChiTietSanPham,TenSP,Loai,SoLuong,DonGia,TrangThai,image
                        FROM dbo.CHITIETSANPHAM
+                       ORDER BY CAST(SUBSTRING(MaChiTietSanPham, 3 ,LEN(MaChiTietSanPham)) AS INT) ASC
                        """;
         try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             ResultSet rs = stm.executeQuery();
