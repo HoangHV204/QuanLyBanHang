@@ -11,19 +11,24 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.KhachHang;
+
 /**
  *
  * @author LE MINH
  */
 public class KhachHangRepository {
-    
+
     public List<KhachHang> getAllKhachHang() {
-        String query = "SELECT * FROM dbo.KHACHHANG";
-        try(Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
+        String query = """
+                       SELECT *
+                       FROM dbo.KHACHHANG
+                       ORDER BY CAST(SUBSTRING(MaKH,3,LEN(MaKH)) AS INT) ASC
+                       """;
+        try (Connection con = DBConnect.getConnection(); PreparedStatement stm = con.prepareStatement(query)) {
             ResultSet rs = stm.executeQuery();
             List<KhachHang> list = new ArrayList<>();
-            while (rs.next()) {                
-                list.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), rs.getString(5),rs.getString(6)));
+            while (rs.next()) {
+                list.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), rs.getString(5), rs.getString(6)));
             }
             return list;
         } catch (Exception e) {
@@ -31,11 +36,14 @@ public class KhachHangRepository {
         }
         return null;
     }
-    
+
     public boolean addKhachHang(KhachHang kh) {
+        if (kh == null) {
+            return false;
+        }
         String query = "{CALL dbo.SP_AddKhachHang(?,?,?,?,?)}";
         int check = 0;
-        try(Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
+        try (Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
             stm.setString(1, kh.getMaKH());
             stm.setString(2, kh.getHoTen());
             stm.setString(3, kh.getDiaChi());
@@ -47,7 +55,7 @@ public class KhachHangRepository {
         }
         return check > 0;
     }
-    
+
     public boolean updateKhachHang(KhachHang kh) {
         String query = """
                        UPDATE dbo.KHACHHANG
@@ -55,7 +63,7 @@ public class KhachHangRepository {
                        WHERE MaKH = ?
                        """;
         int check = 0;
-        try(Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
+        try (Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
             stm.setString(1, kh.getHoTen());
             stm.setString(2, kh.getDiaChi());
             stm.setBoolean(3, kh.isGioiTinh());
@@ -68,14 +76,14 @@ public class KhachHangRepository {
         }
         return check > 0;
     }
-    
+
     public boolean deleteKhachHang(KhachHang kh) {
         String query = """
                        DELETE FROM dbo.KHACHHANG
                        WHERE MaKH = ?
                        """;
         int check = 0;
-        try(Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
+        try (Connection con = DBConnect.getConnection(); CallableStatement stm = con.prepareCall(query)) {
             stm.setString(1, kh.getMaKH());
             check = stm.executeUpdate();
         } catch (Exception e) {
@@ -83,7 +91,7 @@ public class KhachHangRepository {
         }
         return check > 0;
     }
-    
+
     public int getIdKhachHang() {
         String query = """
                        SELECT MAX(CAST(SUBSTRING(MaKH,3,LEN(MaKH)) AS INT))
@@ -99,5 +107,5 @@ public class KhachHangRepository {
         }
         return 0;
     }
-    
+
 }

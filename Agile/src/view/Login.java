@@ -13,7 +13,7 @@ import service.PosService;
  */
 public class Login extends javax.swing.JFrame {
 
-    private PosService service = new PosService();
+    private final PosService service = new PosService();
 
     /**
      * Creates new form Login
